@@ -18,7 +18,7 @@ const Redirect = memo(() => {
   // get settings str from query
   const searchParams = useSearchParams();
   const settings = searchParams.get('settings');
-  const [setConfig] = useGlobalStore((s) => [s.setModelProviderConfig]);
+  const [setConfig] = useGlobalStore((s) => [s.updatePreference]);
 
   useEffect(() => {
     checkHasConversation().then((hasData) => {
@@ -40,14 +40,15 @@ const Redirect = memo(() => {
             endpoint?: string;
           };
         };
-        setTimeout(() => {
-          if (openAI) setConfig('openAI', openAI);
-        }, 5000);
+        if (openAI) {
+          // 调用 updatePreference 更新配置
+          updatePreference(openAI, 'Updating OpenAI settings from URL');
+        }
       } catch (e) {
-        console.error(e);
+        console.error('Failed to parse settings:', e);
       }
     }
-  }, [settings]);
+  }, [settings, updatePreference]);
 
   return null;
 });
