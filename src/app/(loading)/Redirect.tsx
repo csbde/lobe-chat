@@ -18,7 +18,7 @@ const Redirect = memo(() => {
   // get settings str from query
   const searchParams = useSearchParams();
   const settings = searchParams.get('settings');
-  const [setConfig] = useGlobalStore((s) => [s.updatePreference]);
+  const [updatePreference] = useGlobalStore((state) => [state.updatePreference]);
 
   useEffect(() => {
     checkHasConversation().then((hasData) => {
