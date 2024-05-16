@@ -34,16 +34,8 @@ const Redirect = memo(() => {
     if (settings) {
       try {
         const json = JSON.parse(settings);
-        const { openAI } = json as {
-          openAI: {
-            OPENAI_API_KEY?: string;
-            endpoint?: string;
-          };
-        };
-        if (openAI) {
-          // 调用 updatePreference 更新配置
-          updatePreference(openAI, 'Updating OpenAI settings from URL');
-        }
+        // 直接传递解析后的对象进行合并
+        updatePreference(json, 'Updating preferences from URL');
       } catch (e) {
         console.error('Failed to parse settings:', e);
       }
